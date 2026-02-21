@@ -9,7 +9,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://:8000";
 
 function App() {
   const [about, setAbout] = useState(null);
