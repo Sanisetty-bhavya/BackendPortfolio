@@ -127,8 +127,6 @@ def predict_smart_farming(request: SmartFarmingPredictRequest, db: Session = Dep
     db.add(db_log)
         db.commit()
     return SmartFarmingPredictResponse(recommendation=recommendation)
-
-
-@app.get("/")
-def root():
-    return {"message": "Bhavyasri Sanisetty Portfolio Backend API is live 🚀"}
+    @app.get("/")
+    def root():
+        return {"message": "Bhavyasri Sanisetty Portfolio Backend API is live 🚀"}
