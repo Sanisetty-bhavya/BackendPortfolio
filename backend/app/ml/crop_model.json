@@ -1,0 +1,8 @@
+{
+  "base_scores": {
+    "rice": 0.85,
+    "wheat": 0.8,
+    "maize": 0.75,
+    "cotton": 0.7
+  }
+}
