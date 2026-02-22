@@ -1,12 +1,12 @@
+from datetime import datetime
 from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
+from pymongo.database import Database
 
 from . import data
-from .database import Base, SessionLocal, engine
-from .models import ContactMessage, PredictionLog
+from .database import get_mongo_db
 from .schemas import (
     About,
     ContactCreate,
@@ -20,9 +20,6 @@ from .schemas import (
     SkillCategory,
 )
 from .ml.smart_farming_model import build_recommendation, compute_suitability
-
-
-Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
@@ -39,14 +36,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @app.get("/api/about", response_model=About, tags=["portfolio"])
@@ -87,12 +76,23 @@ def get_hiring() -> HiringInfo:
 
 
 @app.post("/api/contact", response_model=ContactResponse, tags=["contact"])
-def create_contact(message: ContactCreate, db: Session = Depends(get_db)) -> ContactResponse:
-    db_message = ContactMessage(name=message.name, email=message.email, message=message.message)
-    db.add(db_message)
-    db.commit()
-    db.refresh(db_message)
-    return db_message
+def create_contact(message: ContactCreate, db: Database = Depends(get_mongo_db)) -> ContactResponse:
+    now = datetime.utcnow()
+    doc = {
+        "name": message.name,
+        "email": message.email,
+        "message": message.message,
+        "created_at": now,
+    }
+    result = db.contact_messages.insert_one(doc)
+    stored = db.contact_messages.find_one({"_id": result.inserted_id})
+    return ContactResponse(
+        id=str(stored["_id"]),
+        name=stored["name"],
+        email=stored["email"],
+        message=stored["message"],
+        created_at=stored["created_at"],
+    )
 
 
 @app.post(
@@ -100,7 +100,9 @@ def create_contact(message: ContactCreate, db: Session = Depends(get_db)) -> Con
     response_model=SmartFarmingPredictResponse,
     tags=["smart-farming"],
 )
-def predict_smart_farming(request: SmartFarmingPredictRequest, db: Session = Depends(get_db)) -> SmartFarmingPredictResponse:
+def predict_smart_farming(
+    request: SmartFarmingPredictRequest, db: Database = Depends(get_mongo_db)
+) -> SmartFarmingPredictResponse:
     score = compute_suitability(
         crop=request.crop,
         nitrogen=request.nitrogen,
@@ -118,15 +120,17 @@ def predict_smart_farming(request: SmartFarmingPredictRequest, db: Session = Dep
         cost_estimate=recommendation_data["cost_estimate"],
         notes=recommendation_data["notes"],
     )
-    db_log = PredictionLog(
-        crop=request.crop,
-        soil_type=request.soil_type,
-        region=request.region,
-        recommendation=recommendation.notes,
-    )
-    db.add(db_log)
-        db.commit()
+    db_log = {
+        "crop": request.crop,
+        "soil_type": request.soil_type,
+        "region": request.region,
+        "recommendation": recommendation.notes,
+        "created_at": datetime.utcnow(),
+    }
+    db.prediction_logs.insert_one(db_log)
     return SmartFarmingPredictResponse(recommendation=recommendation)
-    @app.get("/")
-    def root():
-        return {"message": "Bhavyasri Sanisetty Portfolio Backend API is live 🚀"}
+
+
+@app.get("/")
+def root():
+    return {"message": "Bhavyasri Sanisetty Portfolio Backend API is live 🚀"}

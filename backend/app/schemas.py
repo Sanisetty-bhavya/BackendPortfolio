@@ -54,14 +54,11 @@ class ContactCreate(BaseModel):
 
 
 class ContactResponse(BaseModel):
-    id: int
+    id: str
     name: str
     email: EmailStr
     message: str
     created_at: datetime
-
-    class Config:
-        orm_mode = True
 
 
 class SmartFarmingPredictRequest(BaseModel):

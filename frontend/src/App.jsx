@@ -9,7 +9,23 @@ import ProjectDetailPage from "./pages/ProjectDetailPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://:8000";
+function resolveApiBaseUrl() {
+  const raw = (import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (raw) {
+    try {
+      // Valid absolute URL
+      // eslint-disable-next-line no-new
+      new URL(raw);
+      return raw.replace(/\/+$/, "");
+    } catch {
+      // Ignore invalid env value and fall back
+    }
+  }
+  const host = typeof window !== "undefined" && window.location.hostname ? window.location.hostname : "127.0.0.1";
+  return `http://${host}:8000`;
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 function App() {
   const [about, setAbout] = useState(null);
