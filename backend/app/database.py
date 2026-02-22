@@ -4,10 +4,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.database import Database
+import certifi
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(str(BASE_DIR / ".env"))
 
 
 def _create_mongo_client() -> MongoClient:
@@ -17,7 +18,8 @@ def _create_mongo_client() -> MongoClient:
       "MONGO_URI environment variable is not set. "
       "Set it in backend/.env or as an environment variable."
     )
-  return MongoClient(uri)
+  # Use certifi's CA bundle to avoid local Windows certificate issues
+  return MongoClient(uri, tlsCAFile=certifi.where())
 
 
 _client: MongoClient | None = None
