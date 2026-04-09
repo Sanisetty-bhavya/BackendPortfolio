@@ -31,11 +31,17 @@ class Project(BaseModel):
 
 
 class ProjectDetail(Project):
-    architecture: str
-    api_flow: str
-    ml_pipeline: str
-    json_example: str
-    inference_details: str
+    why_hard: str
+    system_overview: str
+    architecture_desc: str
+    data_pipeline: str
+    model_core_logic: str
+    evaluation: str
+    deployment_scaling: str
+    api_example: str
+    engineering_decisions: str
+    tradeoffs_limitations: str
+    future_work: str
 
 
 class HiringInfo(BaseModel):

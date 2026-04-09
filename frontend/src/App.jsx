@@ -108,8 +108,8 @@ function App() {
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-gradient-to-b dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-50">
       <div className="min-h-screen flex flex-col">
         <Navbar theme={theme} onToggleTheme={toggleTheme} />
-        <main className="flex-1 pt-16">
-          <div className="mx-auto max-w-6xl px-6 py-10 md:px-12 md:py-14 lg:max-w-7xl lg:px-20 lg:py-16">
+        <main className="flex-1 pt-14">
+          <div className="mx-auto max-w-6xl px-6 py-6 md:px-12 md:py-8 lg:max-w-7xl lg:px-20 lg:py-10">
             <Routes>
               <Route
                 path="/"

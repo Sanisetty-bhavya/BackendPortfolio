@@ -3,23 +3,45 @@ import { Link } from "react-router-dom";
 const RESUME_URL = "/Resume.pdf";
 
 function Hero({ about, apiBaseUrl }) {
+  // Helper to render bold text from ** markdown
+  const renderBoldText = (text) => {
+    if (!text) return null;
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
   return (
-    <section className="py-10 sm:py-16">
+    <section className="py-6 sm:py-8">
       <div className="grid gap-10 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.2fr)] items-center">
         <div className="space-y-6">
           <p className="text-xs font-mono uppercase tracking-[0.25em] text-slate-500 dark:text-accent/80">
-            Backend Engineer
+            ML Systems Engineer | Backend & Scalable AI Infrastructure
           </p>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
             {about.name}
           </h1>
-          <p className="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300">
-            {about.title}
-          </p>
-          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-            I build backend services, authentication systems, and machine learning powered applications using Python.
-            Comfortable debugging APIs, handling databases, and integrating external services.
-          </p>
+          <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl space-y-4">
+            <p>{renderBoldText(about.summary)}</p>
+            <ul className="space-y-2 text-slate-700 dark:text-slate-300">
+              <li className="flex items-center gap-2">
+                <span className="text-accent">✔</span>
+                Built and deployed ML-backed APIs serving real-time predictions
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-accent">✔</span>
+                Designed secure authentication systems using JWT and OTP workflows
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-accent">✔</span>
+                Engineered scalable backend architectures for AI-driven applications
+              </li>
+            </ul>
+          </div>
           <div className="flex flex-wrap gap-3">
             <Link to="/projects" className="btn-primary">
               View Projects
@@ -54,14 +76,14 @@ function Hero({ about, apiBaseUrl }) {
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
               </div>
               <pre className="whitespace-pre-wrap">
-{`GET ${apiBaseUrl}/api/projects
+{`GET ${apiBaseUrl}/api/profile
 Accept: application/json
 
 {
   "name": "${about.name}",
-  "role": "Backend Software Engineer",
-  "focus": ["REST APIs", "Authentication", "Machine Learning"],
-  "stack": ["Python", "FastAPI", "React", "SQLite"]
+  "role": "ML Systems Engineer",
+  "focus": ["Backend Systems", "ML Inference", "API Architecture"],
+  "stack": ["Python", "FastAPI", "PyTorch", "JWT", "React"]
 }`}
               </pre>
             </div>

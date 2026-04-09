@@ -57,15 +57,31 @@ def get_projects() -> List[Project]:
 def get_project_detail(slug: str) -> ProjectDetail:
     if slug == data.SMART_FARMING_DETAIL.slug:
         return data.SMART_FARMING_DETAIL
+    if slug == data.MFA_DETAIL.slug:
+        return data.MFA_DETAIL
+    if slug == data.PROMPT_UI_DETAIL.slug:
+        return data.PROMPT_UI_DETAIL
+    if slug == data.TRANSLATION_CLIENT_DETAIL.slug:
+        return data.TRANSLATION_CLIENT_DETAIL
+    if slug == data.HYBRID_FORECASTING_DETAIL.slug:
+        return data.HYBRID_FORECASTING_DETAIL
+    if slug == data.ACADEMIC_PREDICTION_DETAIL.slug:
+        return data.ACADEMIC_PREDICTION_DETAIL
     for project in data.PROJECTS:
         if project.slug == slug:
             return ProjectDetail(
                 **project.dict(),
-                architecture="Architecture details for this project are described at a high level.",
-                api_flow="Requests flow through validation, business logic, and persistence layers.",
-                ml_pipeline="This project does not include an ML pipeline.",
-                json_example="{}",
-                inference_details="No ML-specific inference details for this project.",
+                why_hard="...",
+                system_overview="...",
+                architecture_desc="...",
+                data_pipeline="...",
+                model_core_logic="...",
+                evaluation="...",
+                deployment_scaling="...",
+                api_example="{}",
+                engineering_decisions="...",
+                tradeoffs_limitations="...",
+                future_work="...",
             )
     raise HTTPException(status_code=404, detail="Project not found")
 

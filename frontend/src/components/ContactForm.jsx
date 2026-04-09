@@ -121,8 +121,8 @@ function ContactForm({ apiBaseUrl, showHeader = true }) {
             </p>
             <p>
               Email:{" "}
-              <a href="mailto:sanisettyb@gmail.com" className="text-accent hover:underline">
-                sanisettyb@gmail.com
+              <a href="mailto:bhavyasrisanisetty@gmail.com" className="text-accent hover:underline">
+                bhavyasrisanisetty@gmail.com
               </a>
             </p>
             <p>
@@ -146,6 +146,11 @@ function ContactForm({ apiBaseUrl, showHeader = true }) {
               >
                 linkedin.com/in/bhavyasri-sanisetty-31948424b
               </a>
+            </p>
+          </div>
+          <div className="p-1">
+            <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400 italic">
+              For a detailed overview of my ML systems and research work, please refer to the downloadable resume on the Home page.
             </p>
           </div>
         </div>

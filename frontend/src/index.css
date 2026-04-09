@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-  @apply rounded-xl bg-slate-100 border border-slate-200 shadow-lg shadow-slate-900/5 dark:bg-slate-900/60 dark:border-slate-800 dark:shadow-slate-900/40;
+  @apply rounded-xl bg-slate-100 border border-slate-200 shadow-lg shadow-slate-900/5 dark:bg-slate-900/60 dark:border-slate-800 dark:shadow-slate-900/40 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl dark:hover:bg-slate-900/80;
 }
 
 .btn-primary {

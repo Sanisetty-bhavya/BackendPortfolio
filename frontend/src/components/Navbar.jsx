@@ -13,13 +13,6 @@ function Navbar({ theme, onToggleTheme }) {
     <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-200 bg-slate-50/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 md:px-12 lg:px-20 lg:max-w-7xl">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg overflow-hidden bg-slate-900/90">
-            <img
-              src="/logo.png"
-              alt="Bhavyasri Sanisetty logo"
-              className="h-full w-full object-cover"
-            />
-          </div>
           <div className="leading-tight">
             <p className="text-sm font-semibold text-slate-900 dark:text-slate-50">
               Bhavyasri Sanisetty

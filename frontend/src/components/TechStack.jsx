@@ -1,13 +1,7 @@
 function TechStack({ skills }) {
   return (
     <section id="tech-stack" className="space-y-4">
-      <div className="flex items-baseline justify-between gap-4">
-        <div>
-          <h2 className="section-title">Tech Stack</h2>
-          <p className="section-subtitle">Tools used to build APIs, services, and ML-powered features</p>
-        </div>
-      </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {skills.map((group) => (
           <div key={group.category} className="card p-4 space-y-2">
             <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
